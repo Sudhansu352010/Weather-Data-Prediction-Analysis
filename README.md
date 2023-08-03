@@ -1,3 +1,6 @@
+The objective of this project is to gather weather data through web scraping, clean and preprocess the data, conduct analysis to gain insights about weather patterns, and create a dashboard to visualize the findings.
+
+
 # Weather-Data-Prediction-Analysis
 import numpy as np 
 import pandas as pd 
