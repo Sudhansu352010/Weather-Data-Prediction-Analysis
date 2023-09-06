@@ -1,178 +1,53 @@
+# Weather Data Analysis
+![image](https://github.com/Sudhansu352010/Weather-Data-Prediction-Analysis/assets/131376814/84c997fd-5e81-4256-bccd-ab8f4b83d061)
+
+# Tools & Technologies Used
+![image](https://github.com/Sudhansu352010/Weather-Data-Prediction-Analysis/assets/131376814/8c358cc9-e51a-417a-88d1-96da682af1c7)
+
+
 # Problem Statement
 The objective of this project is to gather weather data through web scraping, clean and preprocess the data, conduct analysis to gain insights about weather patterns, and create a dashboard to visualize the findings.
 
+# OUR APPROACH FOR THE PROJECT
+![image](https://github.com/Sudhansu352010/Weather-Data-Prediction-Analysis/assets/131376814/1ad7694d-0d8a-46b7-8006-678c4b69b98b)
 
-# Weather-Data-Prediction-Analysis
-import numpy as np 
-import pandas as pd 
-import seaborn as sns
-import matplotlib.pyplot as plt
-import requests  
+# User's Manual
+![image](https://github.com/Sudhansu352010/Weather-Data-Prediction-Analysis/assets/131376814/e89ab3c4-b0b2-4979-9988-03419fcff091)
 
-page = requests.get("https://www.timeanddate.com/weather/india/chennai/historic")
+# Data Preparation
+# Data Snapshots
+![image](https://github.com/Sudhansu352010/Weather-Data-Prediction-Analysis/assets/131376814/97d6059a-6927-4598-b9c4-cbfac2c93c60)
 
-from bs4 import BeautifulSoup
-soup=BeautifulSoup(page.content,"html.parser")
 
-table=soup.find_all("table",{"class":"zebra tb-wt fw va-m tb-hover"})
-l=[]
-for i,items in enumerate(table):
-    for i,row in enumerate(items.find_all("tr")):
-        d = {}
-        try:
-#             print(i , row.find_all("td",{"class":""})[0].text)
-            d['Temp'] = row.find_all("td",{"class":""})[0].text
-        except:
-            d['Temp'] = np.nan
-            
-        try:
-#             print(i , row.find("td",{"class":"small"}).text)
-            d['Weather'] = row.find("td",{"class":"small"}).text
-        except:
-            d['Weather']= np.nan
-            
-        try:   
-#             print(i , row.find_all("td",{"class":"sep"})[0].text)
-            d['Wind'] = row.find_all("td",{"class":"sep"})[0].text
-        except:
-            d['Wind'] = np.nan
-            
-        try:  
-#             print(i, row.find("span",{"class":"comp sa16"})['title'])
-            d['Direction'] = row.find("span")["title"]
-        except:
-            try:
-                d['Direction'] = row.find("span",{"class":"comp sa16"})["title"]
-            except:
-                d['Direction'] = np.nan
-            
-        try:
-#             print(i , row.find_all("td",{"class":""})[2].text)
-            d['Humidity'] = row.find_all("td",{"class":""})[2].text
-        except:
-            d['Humidity'] = np.nan
-        try:
-#             print(i , row.find_all("td",{"class":"sep"})[1].text)
-            d['Barometer'] =  row.find_all("td",{"class":"sep"})[1].text
-        except:
-            d['Barometer'] = np.nan
-    
-        try:
-#             print(i , row.find_all("td",{"class":""})[3].text)
-            d['Visibility'] =  row.find_all("td",{"class":""})[3].text
-        except:
-             d['Visibility'] = np.nan
-                
-        l.append(d)
-        
-import pandas
+# Aggregation on Different KPI’s
+Co-relation Heatmap
+![image](https://github.com/Sudhansu352010/Weather-Data-Prediction-Analysis/assets/131376814/3025d03e-03ad-472c-adc8-9f65eccc2b44)
 
-df = pandas.DataFrame(l)
+----------------------------------------------------------------------------------------------------------------------------------
 
-df.to_csv('data.csv', columns = ['Temp', 'Weather', 'Wind', 'Direction', 'Humidity', 'Barometer',
-       'Visibility'])
-       
-df
+Temperature Over Time
+![image](https://github.com/Sudhansu352010/Weather-Data-Prediction-Analysis/assets/131376814/4f93b405-9f77-46fa-9dbf-84d40ff2ecce)
 
-#Drop the Duplicates Value from the dataframe
-df.drop_duplicates(inplace=True)
+-----------------------------------------------------------------------------------------------------------------------------------
+Average Wind Speed by Weather Condition
+![image](https://github.com/Sudhansu352010/Weather-Data-Prediction-Analysis/assets/131376814/2f5a17b1-78ae-486a-a8bc-2d2bb6da654d)
 
-#Check the null values in the dataframe
-df.isnull().sum()
+-----------------------------------------------------------------------------------------------------------------------------------
+Scatter plot between Wind vs Humidity
+![image](https://github.com/Sudhansu352010/Weather-Data-Prediction-Analysis/assets/131376814/9ddb64c3-8f35-4efd-a916-69e8301daa82)
 
-df.dropna(inplace=True)
+# INSIGHTS
+1. Average Humidity is 2043
+2. Average barometer reading is 32k
+3. Average temp found in the data set is 31.78
+4. Average visibility is about 5.72km
 
-# Check the shape of DataFrame
-df.shape
+# Future Scope
+1. Weather data analysis techniques will continue to advance, enabling more accurate weather forecasting. Machine learning and artificial intelligence algorithms will be leveraged to enhance prediction models, incorporating a wide range of data sources such as satellite imagery, weather station data, radar observations, and climate models. This will result in more precise and reliable weather forecasts, benefiting various sectors like agriculture, transportation, renewable energy, and disaster management.
+2. With the increasing frequency and intensity of extreme weather events, analyzing their causes, patterns, and impacts becomes crucial. Weather data analysis will play a vital role in understanding and predicting events such as hurricanes, tornadoes, heatwaves, and floods. This knowledge can help in early warning systems, disaster preparedness, and proactive decision-making to mitigate the adverse effects of these events.
+3. Climate change is a global challenge that requires a deep understanding of long-term weather patterns and trends. Weather data analysis will contribute to assessing climate change impacts, studying climate variability, and analyzing historical weather records. By examining temperature trends, precipitation patterns, and other climatic variables, scientists can better understand the dynamics of climate change and develop effective strategies for adaptation and mitigation.
 
-# Check the Datatypes and Change them accordingly
-df.dtypes
 
-df
 
-for i in df.columns:
-    print(i,df[i].sort_values().unique(),'\n',sep='\n')
-df['Wind'] = df['Wind'].str.replace('km/h', '').astype('int64')
-df['Temp'] = df['Temp'].str.replace('\xa0', ' ').str.replace('°C', '')
-df['Temp']=df['Temp'].astype('float64')
-df['Humidity'] = df['Humidity'].str.extract('(\d+)', expand=False).astype(pd.Int64Dtype())
-df['Barometer'] = df['Barometer'].str.extract('(\d+)', expand=False).astype(pd.Int64Dtype())
-df['Visibility'] = df['Visibility'].str.extract('(\d+)', expand=False).astype(pd.Int64Dtype())
 
-df.dtypes
-# Separate Categorical and Numerical Columns
-cat=[]
-num=[]
-for i in df.columns:
-    if df[i].dtypes=="O":
-        cat.append(i)
-    else:
-        num.append(i)
-        
-cat
-num
-df.describe()
-for i in cat:
-    print(df[i].unique())
-    
-# To show the Relationship between Different Varaibles
-sns.heatmap(df.corr(),annot=True)
 
-# Group by 'Weather' column and calculate average wind speed
-average_wind_speed = df.groupby('Weather')['Wind'].mean()
-print(average_wind_speed)
-
-# Calculate the average temperature
-average_temperature = df['Temp'].mean()
-print(average_temperature)
-
-import matplotlib.pyplot as plt
-
-# Plot a histogram of the 'Humidity' column
-plt.hist(df['Humidity'], bins=10)
-plt.xlabel('Humidity')
-plt.ylabel('Frequency')
-plt.show()
-
-#Scatter plot: Visualize the relationship between two numeric variables.
-import matplotlib.pyplot as plt
-
-# Scatter plot of 'Wind' vs 'Humidity'
-plt.scatter(df['Wind'], df['Humidity'])
-plt.xlabel('Wind')
-plt.ylabel('Humidity')
-plt.title('Scatter plot of Wind vs Humidity')
-plt.show()
-
-#Bar chart: Compare categorical variables or display aggregated values.
-import matplotlib.pyplot as plt
-
-# Bar chart of average wind speed by weather condition
-average_wind_speed = df.groupby('Weather')['Wind'].mean()
-average_wind_speed.plot(kind='bar')
-plt.xlabel('Weather')
-plt.ylabel('Average Wind Speed')
-plt.title('Average Wind Speed by Weather Condition')
-plt.show()
-
-#Box plot: Visualize the distribution and identify outliers.
-import seaborn as sns
-
-# Box plot of 'Barometer' column
-sns.boxplot(x=df['Barometer'])
-plt.xlabel('Barometer')
-plt.title('Box Plot of Barometer')
-plt.show()
-
-#Line plot: Track the changes of a variable over time.
-import matplotlib.pyplot as plt
-
-# Line plot of 'Temp' over time
-plt.plot(df.index, df['Temp'])
-plt.xlabel('Time')
-plt.ylabel('Temperature')
-plt.title('Temperature over Time')
-plt.show()
-
-#  Save this file to csv
-df.to_csv('output.csv', index=False)
