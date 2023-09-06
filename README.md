@@ -36,6 +36,10 @@ Average Wind Speed by Weather Condition
 Scatter plot between Wind vs Humidity
 ![image](https://github.com/Sudhansu352010/Weather-Data-Prediction-Analysis/assets/131376814/9ddb64c3-8f35-4efd-a916-69e8301daa82)
 
+# Dashboard
+![image](https://github.com/Sudhansu352010/Weather-Data-Prediction-Analysis/assets/131376814/b6be8e47-3cb0-4a2f-aafd-45f5eafe6b83)
+
+
 # INSIGHTS
 1. Average Humidity is 2043
 2. Average barometer reading is 32k
